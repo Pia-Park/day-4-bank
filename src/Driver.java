@@ -52,6 +52,15 @@ public class Driver {
 //		}
 //	}
 	
+	public static int findIndexOfAccounts(BankAccount[] accounts, String cName) {
+		for(int i = 0; i < accounts.length; i++) {
+			if(accounts[i].getCusName().equalsIgnoreCase(cName)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public static void main(String[] args) {
 		
 		Scanner input = new Scanner(System.in);
@@ -61,9 +70,41 @@ public class Driver {
 		BankAccount b3 = new BankAccount("PaPA mama", 140.22, 2002, 2);
 		
 		BankAccount[] accounts = new BankAccount[3];
+		accounts[0] = b1;
+		accounts[1] = b2;
+		accounts[2] = b3;
 		
-		printAccountInfo(b1);
-		printAccountInfo(b2);
+		System.out.println("Please enter your name: ");
+		String cusName = input.nextLine();
+		
+		int index = findIndexOfAccounts(accounts, cusName);
+		
+		if(index == -1) {
+			System.err.println("We dont't have" + cusName);
+		} else {
+			System.out.println("Please enter w for withdraw, d for deposit: ");
+			String s = input.nextLine();
+			System.out.println("Please enter the amount: ");
+			double a = input.nextDouble();
+			switch(s.toLowerCase()) {
+			case "w":
+				//do something 
+				accounts[index].withdraw(a);
+				printAccountInfo(accounts[index]);
+				break;
+			case "d":
+				//do something 
+				accounts[index].deposit(a);
+				printAccountInfo(accounts[index]);
+				break;
+			default :
+				System.err.println("Wrong input.");	
+			}
+		}
+		System.out.println(index);
+		
+//		printAccountInfo(b1);
+//		printAccountInfo(b2);
 		
 //		makeTransition(b1, b2);
 		
